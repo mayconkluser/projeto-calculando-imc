@@ -1,31 +1,37 @@
-const calcular = document.getElementById("calculate");
+const botaoCalcular = document.getElementById("calculate");
 
-function imc() {
-  const nome = document.getElementById("name").value,
-    altura = document.getElementById("height").value,
-    peso = document.getElementById("weight").value,
-    resultado = document.getElementById("result");
+const calcularImc = () => {
+  const alturaImc = document.getElementById("height").value;
+  const pesoImc = document.getElementById("weight").value;
+  const valorImc = pesoImc / (alturaImc * alturaImc);
+  return valorImc.toFixed(1);
+};
 
-  if (nome !== "" && altura !== "" && peso !== "") {
-    const valorImc = (peso / (altura * altura)).toFixed(1);
-    let classificacao = "";
-    if (valorImc < 18.5) {
-      classificacao = ", cuidado esta a baixo do peso.";
-    } else if (valorImc < 25) {
-      classificacao = ", esta no peso ideal.";
-    } else if (valorImc < 30) {
-      classificacao = ", esta levemente acima do peso.";
-    } else if (valorImc < 35) {
-      classificacao = ", esta obsidade grau I.";
-    } else if (valorImc < 40) {
-      classificacao = ", esta obsidade grau II.";
+const verificacaoImc = () => {
+  const alturaImc = document.getElementById("height").value;
+  const pesoImc = document.getElementById("weight").value;
+  const nomeImc = document.getElementById("name").value;
+  const resultadoImc = document.getElementById("result");
+  let descricao = "";
+
+  if (nomeImc !== "" && alturaImc !== "" && pesoImc !== "") {
+    if (calcularImc() < 18.5) {
+      descricao = "você esta a baixo do peso.";
+    } else if (calcularImc() < 25) {
+      descricao = "você esta no peso ideal.";
+    } else if (calcularImc() < 30) {
+      descricao = "você com sobre peso.";
     } else {
-      classificacao = ", esta obsidade grau III (morbida).";
+      descricao = "você esta acima do peso.";
     }
-    resultado.textContent = `${nome} Seu IMC é de  ${valorImc}${classificacao}`;
+    resultadoImc.textContent = `${nomeImc} seu IMC é de ${calcularImc()}, ${descricao}`;
   } else {
-    resultado.textContent = "Preencha todos os campos!";
+    resultadoImc.textContent = "Por favor preencha todos os campos!!!";
   }
-}
+};
 
-calcular.addEventListener("click", imc);
+const mostrarImc = () => {
+  verificacaoImc();
+};
+
+botaoCalcular.addEventListener("click", mostrarImc);
